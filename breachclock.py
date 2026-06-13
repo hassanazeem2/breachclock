@@ -2,7 +2,8 @@
 
 import boto3
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
+from visualize import generate_timeline_chart
 
 session = boto3.Session(profile_name='breachclock', region_name='us-east-1')
 cloudtrail = session.client('cloudtrail')
@@ -85,6 +86,10 @@ def main():
         print(f"    Became public: {exposure_time}")
         print(f"    Exposed for: {days}d {hours}h")
         print("=" * 70)
+        
+        # Generate chart
+        print("\n[*] Generating timeline chart...")
+        generate_timeline_chart(events, exposure_time, 'screenshots/timeline.png')
     else:
         print("\n[-] No public exposure detected")
 
