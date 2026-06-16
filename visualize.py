@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from datetime import datetime
+from pathlib import Path
 
 def generate_timeline_chart(events, exposure_time, output_file='timeline.png'):
     """Generate exposure timeline visualization"""
@@ -23,5 +23,7 @@ def generate_timeline_chart(events, exposure_time, output_file='timeline.png'):
     ax.set_title('BreachClock - Exposure Timeline', fontsize=12, fontweight='bold')
     
     plt.tight_layout()
+    output_path = Path(output_file)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
     print(f"[+] Chart saved to {output_file}")

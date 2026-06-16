@@ -137,6 +137,28 @@ python3 breachclock.py
 
 ---
 
+## Usage
+
+Run with the default demo configuration:
+
+```bash
+python3 breachclock.py
+```
+
+Analyze a specific bucket and export a JSON report:
+
+```bash
+python3 breachclock.py \
+  --bucket your-bucket-name \
+  --profile breachclock \
+  --region us-east-1 \
+  --chart screenshots/timeline.png \
+  --report reports/exposure-report.json
+```
+
+The JSON report includes the analyzed bucket, exposure start time, dwell time in
+seconds, public access change count, and the CloudTrail event timeline.
+
 ## Architecture
 
 ### Data Flow
@@ -154,6 +176,8 @@ Calculate exposure window
 Query GetObject attempts in window
           ↓
 Matplotlib visualization
+          ↓
+Optional JSON report export
 ```
 
 ### How Exposure Detection Works
@@ -165,6 +189,7 @@ BreachClock reconstructs the exposure timeline by:
 3. **Recording the exact timestamp** of public access enablement
 4. **Calculating exposure duration** from that moment to now
 5. **Correlating data events** (GetObject) to quantify unauthorized access
+6. **Optionally exporting JSON** for incident response handoff or automation
 
 ---
 
